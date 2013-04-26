@@ -73,7 +73,6 @@ class Board
     get_piece(finish).nil? && on_board?(finish)
   end
 
-  end
 
   def mid_spot_legal?(start, finish)
     cur_x, cur_y = start
