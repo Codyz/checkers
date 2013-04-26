@@ -70,7 +70,9 @@ class Board
   end
 
   def landing_spot_legal?(finish)
-    return false unless get_piece(finish).nil? && on_board?(finish)
+    get_piece(finish).nil? && on_board?(finish)
+  end
+
   end
 
   def mid_spot_legal?(start, finish)
@@ -79,6 +81,7 @@ class Board
     mid_x = (cur_x + finish[0]) / 2
     mid_y = (cur_y + finish[1]) / 2
     mid_spot = [mid_x, mid_y]
+    return false if mid_spot.nil?
     piece.color != get_piece(mid_spot).color
   end
 
@@ -88,8 +91,8 @@ class Board
     piece = get_piece(start)
     piece.color == :B ? x = 2 : x = -2
     dx, dy = finish[0] - cur_x, finish[1] - cur_y
-    correct_distance == (dx == x) && (dy == 2 || dy == -2)
-    correct_distance && mid_spot_legal?(finish) && landing_spot_legal?(finish)
+    correct_distance = (dx == x) && (dy == 2 || dy == -2)
+    correct_distance && mid_spot_legal?(start, finish) && landing_spot_legal?(finish)
   end
 
 
@@ -110,8 +113,24 @@ class Board
   end
 
   def perform_jump(start, finish)
+    unless jump_legal?(start, finish)
+      raise InvalidMoveError.new "You can't make that move!"
+    end
 
+    piece = get_piece(start)
+    move_set = piece.jump_set
 
+    mid_x = (start[0] + finish[0]) / 2
+    mid_y = (start[1] + finish[1]) / 2
 
+    unless move_set.include?(finish)
+      raise InvalidMoveError.new "You can't make that move!"
+    end
+
+    set_piece(finish, piece)
+    @matrix[mid_x][mid_y] = nil
+    @matrix[start[0]][start[1]] = nil
+
+  end
 
 end

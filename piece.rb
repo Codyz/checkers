@@ -26,7 +26,7 @@ class Piece
     start = @pos
     cur_x, cur_y = start
     @color == :B ? x = 2 : x = -2
-    moves = [[x,1], [x,-1]]
+    moves = [[x,2], [x,-2]]
     pos_jumps = []
     moves.each do |dx, dy|
       pos_move = [cur_x + dx, cur_y + dy]
