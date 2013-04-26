@@ -7,8 +7,7 @@ class Piece
     @board = board
   end
 
-  def slide_legal?(start, finish)
-    return false unless start == pos
+  def slide_legal?(finish)
     @board.on_board?(finish) && @board.get_piece(finish).nil?
   end
 
@@ -40,6 +39,7 @@ class Piece
     pos_slides = []
     moves.each do |dx, dy|
       pos_move = [cur_x + dx, cur_y + dy]
+      p pos_move
       pos_slides << pos_move if (slide_legal?(pos_move))
     end
     pos_slides
@@ -57,8 +57,8 @@ class Piece
     pos_jumps
   end
 
-  def perform_slide(start, finish)
-    unless slide_legal(start, finish)
+  def perform_slide(finish)
+    unless slide_legal?(finish)
       raise InvalidMoveError.new "You can't make that move!"
     end
 
@@ -66,9 +66,6 @@ class Piece
     @board.set_piece(finish, piece)
     @board.set_piece(start, nil)
   end
-
-
-
 
 end
 
@@ -135,6 +132,5 @@ class Board
     end
     nil
   end
-
 
 end
