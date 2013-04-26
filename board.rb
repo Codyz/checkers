@@ -88,12 +88,13 @@ class Board
     return false if get_piece(start).nil?
     cur_x, cur_y = start
     piece = get_piece(start)
-    if piece.is_a?(Piece)
+    if piece.promoted == false
       piece.color == :B ? x = 2 : x = -2
       dx, dy = finish[0] - cur_x, finish[1] - cur_y
       correct_distance = (dx == x) && (dy == 2 || dy == -2)
-    elsif piece.is_a?(King)
-      correct_distance = ((dx==2)||(dx==-2)&&(dy==2)||(dy==-2)
+    elsif piece.promoted?
+      correct_distance = ((dx==2)||(dx==-2))&&((dy==2)||(dy==-2))
+    end
     correct_distance && mid_spot_legal?(start, finish) && landing_spot_legal?(finish)
   end
 

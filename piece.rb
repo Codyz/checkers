@@ -1,7 +1,15 @@
 require_relative "board"
 
 class Piece
-  attr_accessor :color, :pos, :board
+  attr_accessor :color, :pos, :board, :promoted
+
+  # red pawn's moves
+  S_DELTAS_RED = [[-1,1], [-1,-1]]
+  J_DELTAS_RED = [[-2,2], [-2,-2]]
+  # black pawn's moves
+  S_DELTAS_RED = [[-1,1], [-1,-1]]
+  J_DELTAS_RED = [[-2,2], [-2,-2]]
+
 
   def initialize(color, pos, board)
     @color = color
