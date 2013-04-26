@@ -27,38 +27,56 @@ class Piece
   def jump_legal?(start, finish)
     return false unless start == @pos
     cur_x, cur_y = @pos
-    @color == :B ? x = 1, x = -1
-    dx, dy = finish[0] - start
-
-
+    @color == :B ? x = 2 : x = -2
+    dx, dy = finish[0] - cur_x, finish[1] - cur_y
+    correct_distance == (dx == x) && (dy == 2 || dy == -2)
+    return correct_distance && mid_spot_legal?(finish) && landing_spot_legal?(finish)
+  end
 
   def slide_set
     cur_x, cur_y = @pos
     @color == :B ? x = 1 : x = -1
     moves = [[x,1], [x,-1]]
-    pos_moves = []
+    pos_slides = []
     moves.each do |dx, dy|
       pos_move = [cur_x + dx, cur_y + dy]
-      pos_moves << pos_move if (slide_legal?(pos_move))
+      pos_slides << pos_move if (slide_legal?(pos_move))
     end
-    pos_moves
+    pos_slides
   end
 
   def jump_set
     cur_x, cury_y = @pos
     @color == :B ? x = 2 : x = -2
     moves = [[x,2], [x,-2]]
-    pos_moves = []
+    pos_jumps = []
     moves.each do |dx, dy|
       pos_move = [cur_x + dx, cur_y + dy]
-      pos_moves << pos_move if (jump_legal?(pos_move))
+      pos_jumps << pos_move if (jump_legal?(pos_move))
     end
-    pos_moves
+    pos_jumps
+  end
+
+  def perform_slide(start, finish)
+    unless slide_legal(start, finish)
+      raise InvalidMoveError.new "You can't make that move!"
+    end
+
+    piece = @board.get_piece(start)
+    @board.set_piece(finish, piece)
+    @board.set_piece(start, nil)
   end
 
 
 
+
 end
+
+
+class InvalidMoveError < StandardError
+end
+
+
 
 class King
   attr_accessor :color
@@ -75,6 +93,11 @@ class Board
 
   def on_board?(pos)
     (0..7).include?(pos[0]) && (0..7).include?(pos[1])
+  end
+
+  def set_piece(pos, piece)
+    x, y = pos
+    @matrix[x][y] = piece
   end
 
   def get_piece(pos)
