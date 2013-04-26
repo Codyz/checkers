@@ -136,4 +136,11 @@ class Board
 
   end
 
+  def promote_pawn(piece)
+    row = piece.color == :B ? 7 : 0 # red promotes at row 0, blk at 7
+    if row == piece.pos[0]
+      piece.king_me
+    end
+  end
+
 end
