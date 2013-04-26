@@ -13,3 +13,5 @@ class Player
     piece.color == self.color
   end
 
+  def make_move
+    puts
