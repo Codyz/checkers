@@ -52,5 +52,9 @@ class Piece
     pos_jumps
   end
 
+  def king_me
+    @promotion = true
+  end
+
 
 end
