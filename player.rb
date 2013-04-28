@@ -1,7 +1,7 @@
 require_relative "board"
 
-class Player
-  attr_accessor :color, :board
+class Player											# REV: Also not convinced you need a Player class. The pieces
+  attr_accessor :color, :board		# already know what color they are.
 
   def initialize(color)
     @color = color

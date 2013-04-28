@@ -18,7 +18,7 @@ class Piece
     @color = color
     @pos = pos
     @board = board
-    @promoted = false
+    @promoted = false		# REV: Right, this makes more sense than a King class.
   end
 
   def slide_set

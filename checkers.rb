@@ -7,3 +7,4 @@ class Piece
     @board = board
   end
 
+	# REV: There will be a game loop here, right? Assuming you didn't get to it...

@@ -3,7 +3,7 @@ require_relative "error"
 
 
 
-class Board
+class Board                # REV: A lot of these methods should be private.
   attr_accessor :matrix
 
   # initialization, retrieve pieces, and display methods
@@ -64,8 +64,8 @@ class Board
   # methods involving the manipulation of pieces on the board
 
 
-  def slide_legal?(start, finish)
-    return false if get_piece(start).nil?
+  def slide_legal?(start, finish)                  # REV: It seems like you could refactor your
+    return false if get_piece(start).nil?					# legal moves tests to be a lot more concise.
     on_board?(finish) && get_piece(finish).nil?
   end
 
